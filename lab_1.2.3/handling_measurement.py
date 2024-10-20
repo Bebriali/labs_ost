@@ -17,16 +17,9 @@ def CountK():
     return g * R * r / 4 / z0 / (pi * pi)
 
 def CountIMeasury(T, M, m, k, I):
+    print("M = ", M, "midT = ", sum(T) / len(T))
     return k * (m + M) * (sum(T) / len(T))**2 - I
-def CountITeoretically(m, s, i):
-    if i == 0:
-        return m * 0.026**2 / 6
-    elif i == 1:
-        return m * s[1]**2 / 8
-    elif i == 2:
-        return m * s[2]**2 / 4
-    else:
-        return m * s[1]**2 / 8 + m * s[2]**2 / 4
+
 
 weights = GetValues("weight.txt")
 weights[len(weights) - 2] = sum(weights[len(weights) - 2: len(weights)])
@@ -35,6 +28,7 @@ weights = [i / 1000 for i in weights]
 print("weights = ", weights, end = '\n')
 
 sizes = GetValues("size.txt")
+sizes = [i / 100 for i in sizes]
 print("sizes = ", sizes, end = '\n')
 
 periods = [0] * 4
@@ -58,13 +52,22 @@ print("I(space} = ", I0, "\n")
 
 I = [0] * 4
 for i in range(len(I)):
-    I[i] = CountIMeasury(periods[i], weights[i], m, k, I0)
+    I[i] = CountIMeasury(periods[i], weights[i], m, k, 0)
 print("I from measures = ", I, "\n")
 
 I1 = [0] * 4
-for i in range(len(I1)):
-    I1[i] = CountITeoretically(weights[i], sizes, i)
-print("I from teory = ", I1, "\n")
+I1[0] = weights[0] * 0.026**2 / 6
+I1[1] = weights[1] * sizes[1] ** 2 / 8
+I1[2] = weights[2] * sizes[2] ** 2 / 4
+I1[3] = I1[1] + I1[2]
+print("I from theory = ", I1, "\n")
+
+
+# for horizontal rod
+
+t = GetValues("periods\horizontal_rod.txt")
+i = weights[0] * (0.026**2 + 0.208**2) / 12
+print("th = ", i, "exp = ", k * weights[0] * (sum(t) / len(t)))
 
 
 
