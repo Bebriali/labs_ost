@@ -49,7 +49,7 @@ print("sa =", sa)
 print("sb =", sb)
 
 a,b,sa,sb = mnk(h2, I2)
-plt.plot([0, 0.05**2], [a, a + b * 0.05**2])
+plt.plot([0, 0.05**2], [a, a + b * 0.05**2], color = "r")
 print("I2: ", I1)
 
 print("a =", a)

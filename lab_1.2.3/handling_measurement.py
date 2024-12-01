@@ -18,6 +18,8 @@ def CountK():
 
 def CountIMeasury(T, M, m, k, I):
     print("M = ", M, "midT = ", sum(T) / len(T))
+    print("periods = ", T)
+    print("weights = ", M)
     return k * (m + M) * (sum(T) / len(T))**2 - I
 
 
@@ -52,7 +54,7 @@ print("I(space} = ", I0, "\n")
 
 I = [0] * 4
 for i in range(len(I)):
-    I[i] = CountIMeasury(periods[i], weights[i], m, k, 0)
+    I[i] = CountIMeasury(periods[i], weights[i], m, k, I0)
 print("I from measures = ", I, "\n")
 
 I1 = [0] * 4

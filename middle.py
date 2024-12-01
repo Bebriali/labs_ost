@@ -22,3 +22,5 @@ sigma = sqrt(sum(delta) / len(delta) / (len(delta) - 1))
 print("middle value = ", mid_value)
 print("sigma middle = ", sigma)
 print("epsilon = ", sigma / mid_value * 100, "%")
+
+input()

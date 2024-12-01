@@ -63,6 +63,9 @@ a,b,sa,sb = mnk(h2, I)
 plt.plot([0, 0.05**2], [a, a + b * 0.05**2], color = "r")
 print("I1: ", I)
 
+periods = [sum(i) / len(i) for i in periods]
+print("periods = ", periods)
+
 print("a =", a)
 print("b =", b)
 print("sa =", sa)
