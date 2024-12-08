@@ -32,12 +32,18 @@ def mnk(x, y):
 print("enter the values name : ")
 name = input()
 
-print("enter the path : ")
-path = input()
-print("enter the filename : ")
-filename = input()
-Oy = GetValues(path + '/' + filename + '.txt')
-Ox = [i + 1 for i in range(len(Oy))]
+print("enter the pathy : ")
+pathy = input()
+print("enter the filenamey : ")
+filenamey = input()
+
+print("enter the pathx : ")
+pathx = input()
+print("enter the filenamex : ")
+filenamex = input()
+
+Oy = GetValues(pathy + '/' + filenamey + '.txt')
+Ox = GetValues(pathx + '/' + filenamex + '.txt')
 a, b, sa, sb = mnk(Ox, Oy)
 
 
@@ -74,6 +80,6 @@ print('mid_f = ', mid_f)
 plt.xlabel("harmonic number")
 plt.ylabel(name)
 
-plt.savefig(path + '/' + filename + '_graph.png')
+plt.savefig(pathy + '/' + filenamey + '_graph.png')
 plt.show()
 
