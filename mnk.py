@@ -8,7 +8,9 @@ from matplotlib.ticker import NullLocator, IndexLocator, MaxNLocator
 
 def GetValues (b):
     with open(b) as f:
-        a = [float(i) for i in f.readline().split()]
+        a = []
+        while f.readline():
+            a += [float(i.replace(',', '.')) for i in f.readline().split()]
     return a
 
 def mnk(x, y):
@@ -28,7 +30,6 @@ def mnk(x, y):
 
     return a,b,sa,sb
 
-
 print("enter the values name : ")
 name = input()
 
@@ -44,6 +45,11 @@ filenamex = input()
 
 Oy = GetValues(pathy + '/' + filenamey + '.txt')
 Ox = GetValues(pathx + '/' + filenamex + '.txt')
+
+file = open(pathy + "/" + name + ".txt", "w")
+
+print("oy = ", Oy)
+print("ox = ", Ox)
 a, b, sa, sb = mnk(Ox, Oy)
 
 
@@ -64,18 +70,25 @@ ax.yaxis.set_minor_locator(MaxNLocator(50))
 
 plt.scatter(Ox, Oy)
 
-plt.plot([0, len(Oy)], [a, a + b * len(Oy)], color = "r")
+plt.plot([0, max(Ox) + min(Ox)], [a, a + b * (max(Ox) + min(Ox))], color = "r")
 print(name + ": ", Oy)
 
-print("a =", a)
+print("a =" + str(a))
 print("b =", b)
 print("sa =", sa)
 print("sb =", sb)
+line = 'a = ' + str(a) + "\nb = " + str(b) + "\nsa = " + str(sa) + "\nsb = " + str(sb) + "\n"
+file.write(line)
 
 print('Ox = ', Ox)
+line = "Ox = " + str(Ox) + "\n"
+file.write(line)
 
 mid_f = [Oy[i] / Ox[i] for i in range(len(Oy))]
 print('mid_f = ', mid_f)
+line = "mid_f = " + str(mid_f) + "\n"
+file.write(line)
+file.close()
 
 plt.xlabel("harmonic number")
 plt.ylabel(name)
