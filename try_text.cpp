@@ -1,0 +1,120 @@
+#include <stdio.h>
+
+int main()
+{
+    printf("[1mdiff --git a/lab_1.2.3/graph.py b/lab_1.2.3/graph.py[m
+[1mdeleted file mode 100644[m
+[1mindex e69de29..0000000[m
+[1mdiff --git a/lab_1.2.3/handling_measurement.py b/lab_1.2.3/handling_measurement.py[m
+[1mindex e9e9ef2..eb09564 100644[m
+[1m--- a/lab_1.2.3/handling_measurement.py[m
+[1m+++ b/lab_1.2.3/handling_measurement.py[m
+[36m@@ -17,16 +17,9 @@[m [mdef CountK():[m
+     return g * R * r / 4 / z0 / (pi * pi)[m
+ [m
+ def CountIMeasury(T, M, m, k, I):[m
+[32m+[m[32m    print("M = ", M, "midT = ", sum(T) / len(T))[m
+     return k * (m + M) * (sum(T) / len(T))**2 - I[m
+[31m-def CountITeoretically(m, s, i):[m
+[31m-    if i == 0:[m
+[31m-        return m * 0.026**2 / 6[m
+[31m-    elif i == 1:[m
+[31m-        return m * s[1]**2 / 8[m
+[31m-    elif i == 2:[m
+[31m-        return m * s[2]**2 / 4[m
+[31m-    else:[m
+[31m-        return m * s[1]**2 / 8 + m * s[2]**2 / 4[m
+[32m+[m
+ [m
+ weights = GetValues("weight.txt")[m
+ weights[len(weights) - 2] = sum(weights[len(weights) - 2: len(weights)])[m
+[36m@@ -35,6 +28,7 @@[m [mweights = [i / 1000 for i in weights][m
+ print("weights = ", weights, end = '\n')[m
+ [m
+ sizes = GetValues("size.txt")[m
+[32m+[m[32msizes = [i / 100 for i in sizes][m
+ print("sizes = ", sizes, end = '\n')[m
+ [m
+ periods = [0] * 4[m
+[36m@@ -58,13 +52,22 @@[m [mprint("I(space} = ", I0, "\n")[m
+ [m
+ I = [0] * 4[m
+ for i in range(len(I)):[m
+[31m-    I[i] = CountIMeasury(periods[i], weights[i], m, k, I0)[m
+[32m+[m[32m    I[i] = CountIMeasury(periods[i], weights[i], m, k, 0)[m
+ print("I from measures = ", I, "\n")[m
+ [m
+ I1 = [0] * 4[m
+[31m-for i in range(len(I1)):[m
+[31m-    I1[i] = CountITeoretically(weights[i], sizes, i)[m
+[31m-print("I from teory = ", I1, "\n")[m
+[32m+[m[32mI1[0] = weights[0] * 0.026**2 / 6[m
+[32m+[m[32mI1[1] = weights[1] * sizes[1] ** 2 / 8[m
+[32m+[m[32mI1[2] = weights[2] * sizes[2] ** 2 / 4[m
+[32m+[m[32mI1[3] = I1[1] + I1[2][m
+[32m+[m[32mprint("I from theory = ", I1, "\n")[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# for horizontal rod[m
+[32m+[m
+[32m+[m[32mt = GetValues("periods\horizontal_rod.txt")[m
+[32m+[m[32mi = weights[0] * (0.026**2 + 0.208**2) / 12[m
+[32m+[m[32mprint("th = ", i, "exp = ", k * weights[0] * (sum(t) / len(t)))[m
+ [m
+ [m
+ [m
+[1mdiff --git a/lab_1.2.3/middle.py b/lab_1.2.3/middle.py[m
+[1mindex e69de29..9b01fbf 100644[m
+[1m--- a/lab_1.2.3/middle.py[m
+[1m+++ b/lab_1.2.3/middle.py[m
+[36m@@ -0,0 +1,24 @@[m
+[32m+[m[32mfrom math import *[m
+[32m+[m
+[32m+[m[32mdef GetValues (b):[m
+[32m+[m[32m    with open(b) as f:[m
+[32m+[m[32m        a = [float(i) for i in f.readline().split()][m
+[32m+[m[32m    return a[m
+[32m+[m
+[32m+[m
+[32m+[m[32mprint("'middle value and middle sigma calculator'")[m
+[32m+[m[32mprint("enter the path to the file with the values")[m
+[32m+[m[32mpath = input()[m
+[32m+[m[32mvalues = GetValues(path)[m
+[32m+[m[32mmid_value = sum(values) / len(values)[m
+[32m+[m[32mdelta = [0] * len(values)[m
+[32m+[m
+[32m+[m[32mfor i in range(len(delta)):[m
+[32m+[m[32m    delta[i] = mid_value - values[i][m
+[32m+[m[32m    delta[i] **= 2[m
+[32m+[m
+[32m+[m[32msigma = sqrt(sum(delta) / len(delta) / (len(delta) - 1))[m
+[32m+[m
+[32m+[m[32mprint("middle value = ", mid_value)[m
+[32m+[m[32mprint("sigma middle = ", sigma)[m
+[32m+[m[32mprint("epsilon = ", sigma / mid_value * 100, "%")[m
+\ No newline at end of file[m
+[1mdiff --git a/lab_1.2.3/plot_example.py b/lab_1.2.3/plot_example.py[m
+[1mindex 9fb3701..8b2bcd4 100644[m
+[1m--- a/lab_1.2.3/plot_example.py[m
+[1m+++ b/lab_1.2.3/plot_example.py[m
+[36m@@ -40,7 +40,7 @@[m [mdef mnk(x, y):[m
+     return a,b,sa,sb[m
+ [m
+ a,b,sa,sb = mnk(h2, I1)[m
+[31m-#plt.plot([0, 0.05**2], [a, a + b * 0.05**2], color = "r")[m
+[32m+[m[32mplt.plot([0, 0.05**2], [a, a + b * 0.05**2], color = "r")[m
+ print("I1: ", I1)[m
+ [m
+ print("a =", a)[m
+[36m@@ -49,7 +49,7 @@[m [mprint("sa =", sa)[m
+ print("sb =", sb)[m
+ [m
+ a,b,sa,sb = mnk(h2, I2)[m
+[31m-#plt.plot([0, 0.05**2], [a, a + b * 0.05**2])[m
+[32m+[m[32mplt.plot([0, 0.05**2], [a, a + b * 0.05**2])[m
+ print("I2: ", I1)[m
+ [m
+ print("a =", a)[m")
+ 
+ return 0;
+}
